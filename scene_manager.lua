@@ -11,6 +11,11 @@ local sceneManager = {
 
 
 function sceneManager.loadScene (name)
+  if sceneManager.currentScene then
+    if sceneManager.currentScene.unload then
+      sceneManager.currentScene.unload()
+    end
+  end
   sceneManager.currentScene = require(name)
 end
 
