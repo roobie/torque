@@ -16,7 +16,7 @@ end
 
 
 eventManager.changeScene:subscribe(function (cfg)
-    sceneManager.loadScene(cfg.sceneName)
+    sceneManager.loadScene('scenes/'..cfg.sceneName)
 end)
 
 
