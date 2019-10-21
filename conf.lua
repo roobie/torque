@@ -4,8 +4,8 @@ require('set_paths')
 function love.conf (t)
   local w = t.window
   w.title = 'Torque'
-  w.width = 600
-  w.height = 600
+  w.width = 1080
+  w.height = 720
 
   t.modules.audio = true
   t.modules.data = true

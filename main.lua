@@ -5,8 +5,9 @@ end
 
 local sys = require('sys')
 local resourceManager = require('resource_manager')
-local inputManager = nil
-local sceneManager = nil
+local globalInputManager = require('global_input_manager')
+local eventManager = require('event_manager')
+local sceneManager = require('scene_manager')
 local stateManager = nil
 
 local log = sys.Log.new('game.log', 'debug')
@@ -20,23 +21,26 @@ function love.load ()
   resourceManager.load()
   gr.setFont(resourceManager.fonts.firaCode.regular)
 
+  sceneManager.load()
+  globalInputManager.load()
+
   log:debug('Starting game')
 end
 
 function love.draw ()
+  gr.clear(0.1, 0.0, 0.3, 0.4)
+  sceneManager.draw()
   sys.drawDebugInfo()
 end
 
 function love.update (dt)
+  sceneManager.update(dt)
+  globalInputManager.update(dt)
 end
 
 function love.keypressed (key, scancode, isrepeat)
-  if kb.isDown('lalt') then
-    if scancode == 'q' then
-      love.event.quit()
-    elseif scancode == 'r' then
-      reload()
-    end
+  if not sceneManager.keypressed(key, scancode, isrepeat) then
+    globalInputManager.keypressed(key, scancode, isrepeat)
   end
 end
 
