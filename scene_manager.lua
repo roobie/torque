@@ -1,6 +1,7 @@
 
 local gr = love.graphics
 local kb = love.keyboard
+local lute = require('lute')
 
 local eventManager = require('event_manager')
 
@@ -11,11 +12,9 @@ local sceneManager = {
 
 
 function sceneManager.loadScene (name)
-  if sceneManager.currentScene then
-    if sceneManager.currentScene.unload then
-      sceneManager.currentScene.unload()
-    end
-  end
+  local unload = lute.tables.get(
+    sceneManager, 'currentScene.unload', lute.func.nop)
+  unload()
   sceneManager.currentScene = require(name)
 end
 
